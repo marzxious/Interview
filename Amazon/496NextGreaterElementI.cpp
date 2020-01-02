@@ -12,7 +12,8 @@ Explanation:
 
 Solution:
 	Monotonic Decreasing Stack --> We traverse num2, if traversed current number is greater than nums at stack top, then all numbers in the stack that is smaller than current number, has current number as next greater number. 
-
+	Consider a case : [ 5, 4, 3, 2, 1, 6] for everything < 6, their next greater value is 6. 
+	
 	Time Complexity : O(N) , where N as size of nums2
 	Space Complexity : O(1) reuse nums1
 */
