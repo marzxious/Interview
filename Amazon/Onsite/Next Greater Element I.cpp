@@ -15,7 +15,7 @@ Solution:
 	Consider a case : [ 5, 4, 3, 2, 1, 6] for everything < 6, their next greater value is 6. 
 	
 	Time Complexity : O(N) , where N as size of nums2
-	Space Complexity : O(1) reuse nums1
+	Space Complexity : O(N)  worse case stack depth = N
 */
 class Solution {
 public:
