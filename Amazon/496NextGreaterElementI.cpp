@@ -1,6 +1,6 @@
 
 /*
-題意: 找到nums1 樹駔 在nums2 數組的第一個比他大的數字. (排序不動)
+題意: find num1 in nums2 array's first greater number (Caution : the order of nums2 does not change)
 
 Input: nums1 = [4,1,2], nums2 = [1,3,4,2].
 Output: [-1,3,-1]
