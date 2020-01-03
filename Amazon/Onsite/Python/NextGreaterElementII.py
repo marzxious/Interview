@@ -1,6 +1,6 @@
 class Solution:
     def nextGreaterElements(self, nums: List[int]) -> List[int]:
-        # 弄成两份，第二份建立单调栈
+        # 弄成两份，拿第二份建立单调栈
         stack = []
         n = len(nums)
         for i in range(n-1, -1, -1):
