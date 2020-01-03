@@ -16,6 +16,10 @@ next permuation :
 2. 降序起點的前一個位置是下一個permutation要考慮的位置.
 3. 從後面找到第一個比下一個permutation大的數字, 進行交換
 4. 交換後這段變成升序.(permutation 最小)
+
+Time Complexity: O(N)
+Space Complexity: O(N) --> convert to string
+
 */
 class Solution {
 public:
