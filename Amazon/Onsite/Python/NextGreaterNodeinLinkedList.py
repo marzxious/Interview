@@ -12,7 +12,7 @@ class Solution:
         while cur:
             nums.append(cur.val)
             cur = cur.next
-        # monotonic decreasing stack, same as 
+        # monotonic decreasing stack, same as Next Greater Element I
         res = []
         stack = []
         n = len(nums)
