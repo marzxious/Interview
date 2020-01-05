@@ -13,6 +13,7 @@ class Solutions:
         self.sol,self.visitTimeAnyPath,self.visitTime = [], [0] * n, [0] * n
         self.dfs(g, 0, -1) 
         return self.sol
+        
     def dfs(self, g, cur, parent):
         if self.visitTime[cur] > 0: # 已经访问过的节点跳过
             return
