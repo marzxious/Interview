@@ -1,17 +1,17 @@
+# n-ary traversal, BFS, DFS
 #BFS
 class Codec:
     def serialize(self, root: 'Node') -> str:
-        # n-ary traversal, BFS, DFS
         if not root: return ''
         res = []
         q = collections.deque([root])
         res = [str(root.val)]
         while q:
             node = q.popleft()
-            for child in node.children:
+            for child in node.children: # 入对写字符串
                 res.append(str(child.val))
                 q.append(child)
-            res.append('#') 
+            res.append('#') #处理完了一个node的所有children就加一个 end of children marker
         return ','.join(res)
         
     def deserialize(self, data):
@@ -22,7 +22,7 @@ class Codec:
         q = collections.deque([root])
         while q:
             cur = q.popleft()
-            while data[0] != '#': # 遇到 end of child marker的时候停止
+            while data[0] != '#': # 遇到 end of child marker的时候cur的children 就弄完了
                 child = Node(int(data.popleft()),[])
                 cur.children.append(child)
                 q.append(child)
@@ -31,11 +31,7 @@ class Codec:
 
 ## DFS
 class Codec:
-    def serialize(self, root):
-        """Encodes a tree to a single string.
-        :type root: Node
-        :rtype: str
-        """        
+    def serialize(self, root): 
         if root is None: return ''
         res = self.serial_tree(root)
         print(res)
@@ -51,11 +47,7 @@ class Codec:
         return res
         
     def deserialize(self, data):
-        """Decodes your encoded data to tree.
-        :type data: str
-        :rtype: Node
-        """
-        if len(data) ==0: return None
+        if len(data) == 0: return None
         datastr = collections.deque(data.split(','))
         root = self.deserial_tree(datastr)
         return root
