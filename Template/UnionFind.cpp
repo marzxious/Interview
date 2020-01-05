@@ -1,12 +1,8 @@
 /*
- * Union Find : Union (Connect Subsets, O(1)) Find( Check if two components are in same subset, O(1)
+ * Union Find : Union (Connect Subsets, O(1) + O(N) merge subset) Find( Check if two components are in same subset, O(1)
  * We add additional Sets to record members in the same subset
  *
- *
- *
- *
- *
- *
+ * 
  */
 
 
