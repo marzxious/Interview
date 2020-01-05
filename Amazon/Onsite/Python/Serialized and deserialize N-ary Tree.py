@@ -1,37 +1,32 @@
 #BFS
-
 class Codec:
     def serialize(self, root: 'Node') -> str:
         # n-ary traversal, BFS, DFS
         if not root: return ''
         res = []
         q = collections.deque([root])
+        res = [str(root.val)]
         while q:
             node = q.popleft()
-            if node != '#':
-                res.append(str(node.val))
-                for child in node.children:
-                    q.append(child)
-                q.append('#')
-            else:
-                res.append('#') # 这一家的兄弟访问完了
-        print(res)
+            for child in node.children:
+                res.append(str(child.val))
+                q.append(child)
+            res.append('#') 
         return ','.join(res)
         
     def deserialize(self, data):
         if len(data) == 0: return None
         data = data.split(',')
-        root = Node(int(data[0]), [])
-        idx = 1
+        data = collections.deque(data)
+        root = Node(int(data.popleft()), [])
         q = collections.deque([root])
         while q:
             cur = q.popleft()
-            while data[idx] != '#':
-                child = Node(int(data[idx]),[])
+            while data[0] != '#': # 遇到 end of child marker的时候停止
+                child = Node(int(data.popleft()),[])
                 cur.children.append(child)
                 q.append(child)
-                idx += 1
-            idx += 1
+            data.popleft() # 去掉 ‘#’
         return root
 
 ## DFS
