@@ -39,45 +39,42 @@
 #         self.right = None
 class Codec:
     def serialize(self, root):
-        # BFS, mark None as #, 空节点入队列
+        # BFS, mark None as #, 入队列的时候写字符串
         if root is None: return ''
         q = collections.deque([root])
-        res = []
+        res = [str(root.val)]
         while q:
             cur = q.popleft()
-            if cur:
-                q.append(cur.left) # 空节点也会入队列
-                q.append(cur.right)
-                res.append(str(cur.val))
+            if cur.left:
+                res.append(str(cur.left.val))
+                q.append(cur.left)
             else:
                 res.append('#')
-        
-        n = len(res) # 去掉最后的‘#‘
-        for i in range(n-1, -1,-1):
-            if res[i] == '#': 
-                res.pop()
+            if cur.right:
+                res.append(str(cur.right.val))
+                q.append(cur.right)
             else:
-                break
+                res.append('#')
         return ','.join(res)            
 
     def deserialize(self, data):
         if len(data) == 0: return None
         L = data.split(',')
-        root = TreeNode(int(L[0]))
+        data = collections.deque(L)
+        root = TreeNode(int(data.popleft()))
         q = collections.deque([root])
-        idx = 1
         while q:
-            if idx == len(L): break # 处理完所有data，而队列不一定为空，需要停止
             cur = q.popleft()
-            if L[idx] != '#':
-                cur.left= TreeNode(str(L[idx]))
+            if data[0] != '#':
+                cur.left= TreeNode(str(data.popleft()))
                 q.append(cur.left)
-            idx += 1
-            if idx == len(L): break
-            if L[idx] != '#':
-                cur.right= TreeNode(str(L[idx]))
+            else:
+                data.popleft() #pop '#'
+            if data[0] != '#':
+                cur.right= TreeNode(str(data.popleft()))
                 q.append(cur.right)
-            idx += 1
+            else:
+                data.popleft() #pop '#'
         return root
 
 # Definition for a binary tree node.
