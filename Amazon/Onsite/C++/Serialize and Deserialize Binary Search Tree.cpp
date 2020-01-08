@@ -16,11 +16,12 @@ Example: 6 (root), INT_MIN < 4 < 6 (left child of 6), INT_MIN < 3 < 4 (left chil
       / \    / \
      3   5 11  15
  
-  3. 後序遍歷encode + 先序遍歷decode 
+ 3. 後序遍歷encode + 先序遍歷decode 
   後序遍歷: [L, R, Root] --> [3, 5, 4], [11, 13, 15], 6  [左子樹],[右子樹], 根 從後面看回來變成 根[右子樹][左子樹], 所以可以用類似solution 2先序遍歷的方式來decode
   只是方法從Root, L, R 變成 Root, R, L. 判斷上下界的方式則與solution 2一樣.
 
 
+Note: BST 因為有左子樹小於根, 右子樹 大於根, 對任何的traversal, 重新排序之後 則變成中序遍歷 L, Root, R
 
  */
 
