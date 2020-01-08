@@ -16,10 +16,15 @@ Example: 6 (root), INT_MIN < 4 < 6 (left child of 6), INT_MIN < 3 < 4 (left chil
       / \    / \
      3   5 11  15
  
- 
+  3. 後序遍歷encode + 先序遍歷decode 
+  後序遍歷: [L, R, Root] --> [3, 5, 4], [11, 13, 15], 6  [左子樹],[右子樹], 根 從後面看回來變成 根[右子樹][左子樹], 所以可以用類似solution 2先序遍歷的方式來decode
+  只是方法從Root, L, R 變成 Root, R, L. 判斷上下界的方式則與solution 2一樣.
+
+
+
  */
 
-/* Solution 2 : Use Preorder to only to reconstrcut tree*/
+/* # 都用先序遍历*/
 class Codec {
 public:
 
@@ -45,13 +50,13 @@ public:
         return preorder(q, INT_MIN, INT_MAX);
     }
     
-    //preorder deserialize : reconstrcut a node from top of q, l : lower bound of this node, r : upper bound of this node */
-     TreeNode* preorder(queue<int>& q, int l, int r) {
-        if(q.empty() || q.front() < l || q.front() > r) return NULL;
+    //preorder deserialize : reconstrcut a node from top of q, l : lower bound of this node, u : upper bound of this node */
+     TreeNode* preorder(queue<int>& q, int l, int u) {
+        if(q.empty() || q.front() < l || q.front() > u) return NULL;
         TreeNode* root = new TreeNode(q.front()); q.pop();
         
          root->left = preorder(q, l, root->val);
-         root->right = preorder(q, root->val, r);p;
+         root->right = preorder(q, root->val, u);
          return root;
     }
     
@@ -64,6 +69,81 @@ public:
            if(token=="") continue;
             res.push(stoi(token));    
         }
+        return res;
+    }
+};
+
+
+/*後序遍歷encode + 先序遍歷decode*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Codec {
+public:
+
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string res = postorder(root);
+        cout<<res<<endl;
+        return res;
+    }
+    // L, R, Root
+    string postorder(TreeNode* root) {
+        if(root == NULL) return "";
+        string left = postorder(root->left);
+        string right = postorder(root->right);
+        string res = "";
+
+        if(left!="") {
+            res+=left;
+            res.push_back(',');
+        }
+
+        if(right!="") {
+            res+=right;
+            res.push_back(',');
+        }
+
+        return res + to_string(root->val);
+
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        auto res = split(data);
+        TreeNode* root = preorder(res, INT_MIN, INT_MAX);
+        return root;
+    }
+
+    // 從後面按照 Root, R, L的方式遍歷.
+    TreeNode* preorder(vector<TreeNode*>& data, int l, int u)
+    {
+        if(data.size() ==0 || data.back()->val < l || data.back()->val > u) return NULL;
+
+        TreeNode* root = data.back();
+        data.pop_back();
+
+        root->right = preorder(data, root->val, u);
+        root->left = preorder(data, l, root->val);
+        return root;
+    }
+
+private:
+    vector<TreeNode*> split(string& data) {
+        istringstream ss(data);
+        string token;
+        vector<TreeNode*> res;
+        while(getline(ss, token, ',')) {
+            res.push_back(new TreeNode(stoi(token)));
+        }
+
         return res;
     }
 };
