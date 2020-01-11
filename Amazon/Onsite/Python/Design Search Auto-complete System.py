@@ -20,6 +20,7 @@ class Trie:
                 if len(cur.top3[w]) > 3: cur.top3[w].pop()
             cur = cur.children[w]
         cur.isword = True
+        
 class AutocompleteSystem(object):
     def __init__(self, sentences, times):
         self.t = Trie()
